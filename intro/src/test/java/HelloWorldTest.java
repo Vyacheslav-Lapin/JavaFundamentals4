@@ -1,6 +1,7 @@
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
 
 public class HelloWorldTest {
 
@@ -17,19 +18,19 @@ public class HelloWorldTest {
         int i4;
         int i5;
 
-        assertEquals(-3, i2 = -i++);
-        assertEquals(4, i);
+        assertThat(i2 = -i++, is(-3));
+        assertThat(i, is(4));
 
-        assertEquals(4, i3 = i++);
-        assertEquals(5, i);
+        assertThat(i3 = i++, is(4));
+        assertThat(i, is(5));
 
-        assertEquals(-5, i4 = -i);
-        assertEquals(5, i);
+        assertThat(i4 = -i, is(-5));
+        assertThat(i, is(5));
 
-        assertEquals(1, i5 = i2 + i3);
-        assertEquals(5, i);
+        assertThat(i5 = i2 + i3, is(1));
+        assertThat(i, is(5));
 
-        assertEquals(-4, i5 + i4);
-        assertEquals(5, i);
+        assertThat(i5 + i4, is(-4));
+        assertThat(i, is(5));
     }
 }
