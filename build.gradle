@@ -14,7 +14,7 @@ subprojects {
     }
 
     dependencies {
-//        compile 'org.hibernate:hibernate-core:+'
+        compile 'org.projectlombok:lombok:+'
         testCompile 'junit:junit:+'
     }
 }
