@@ -8,7 +8,7 @@ public class MedicalStaff {
     }
 }
 
-class Doctor extends MedicalStaff {
+class Doctor extends generics.MedicalStaff {
 //    public static void info1() { //Error
 //        System.out.println("Doctor1");
 //    }
