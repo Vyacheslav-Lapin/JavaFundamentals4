@@ -32,7 +32,7 @@ public class VarArgs {
         printArgCount(7, "No", true, null); // "Object args: 4"
         printArgCount(i, i, i); // "Integer[] args: 3"
         printArgCount(i, 4, 71); // "Object args: 3"
-        printArgCount(i); // будет вызван метод 1 // "Object args: 5"
+//        printArgCount(i); // будет вызван метод 1 // "Object args: 5"
         printArgCount(new int[]{5, 7}); //неопределенность, 1 или 3!
     }
 
