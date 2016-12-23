@@ -7,12 +7,7 @@ public interface MyInterface {
     }
 
     static MyInterface get() {
-        return new MyInterface() {
-            @Override
-            public int m(double d) {
-                return new Double(d).intValue();
-            }
-        };
+        return d -> new Double(d).intValue();
     }
 
     int m(double d);
