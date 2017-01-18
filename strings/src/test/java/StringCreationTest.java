@@ -1,22 +1,27 @@
 import org.junit.Test;
 
+import java.nio.charset.Charset;
+
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
 public class StringCreationTest {
 
+    private static final Charset CP_866 = Charset.forName("cp866");
+    public static final Charset CP_1251 = Charset.forName("cp1251");
+
     @Test
     public void encodingsCheck() throws Exception {
-        char[] data1 = { 'a', 'b', 'c', 'd', 'e', 'f' };
+        char[] data1 = {'a', 'b', 'c', 'd', 'e', 'f'};
         assertThat(new String(data1, 2, 3), is("cde"));
 
-        char[] data2 = { '\u004A', '\u0041', '\u0056', '\u0041' };
+        char[] data2 = {'\u004A', '\u0041', '\u0056', '\u0041'};
         assertThat(new String(data2), is("JAVA"));
 
-        byte ascii[] = { 65, 66, 67, 68, 69, 70 };
+        byte ascii[] = {65, 66, 67, 68, 69, 70};
         assertThat(new String(ascii), is("ABCDEF"));
 
-        byte[] data3 = { (byte) 0xE3, (byte) 0xEE };
+        byte[] data3 = {(byte) 0xE3, (byte) 0xEE};
         assertThat(new String(data3, "CP1251"), is("го"));
         assertThat(new String(data3, "CP866"), is("ую"));
     }
@@ -57,7 +62,7 @@ public class StringCreationTest {
 
     @Test
     public void intsAsString() {
-        int[] ints = { 0x3fdc, 0x4010 };
+        int[] ints = {0x3fdc, 0x4010};
         String string = new String(ints, 0, ints.length).intern();
         assertThat(string.length(), is(2));
 
@@ -73,4 +78,24 @@ public class StringCreationTest {
             assertThat(bytes[index], is(checkBytes[index++]));
     }
 
+    @Test
+    public void CharacterReadCheck() throws Exception {
+        String str = "Мама мыла раму1!";
+
+        byte[] strCP866 = str.getBytes(CP_866);
+        byte[] bytesCP866 = {-116, -96, -84, -96, 32, -84, -21, -85, -96, 32, -32, -96, -84, -29, 49, 33};
+
+        byte[] strCP1251 = str.getBytes(CP_1251);
+        byte[] bytesCP1251 = {-52, -32, -20, -32, 32, -20, -5, -21, -32, 32, -16, -32, -20, -13, 49, 33};
+
+        for (int i = 0; i < strCP866.length; i++)
+            assertThat(strCP866[i], is(bytesCP866[i]));
+
+        for (int i = 0; i < strCP1251.length; i++)
+            assertThat(strCP1251[i], is(bytesCP1251[i]));
+
+        assertThat(new String(strCP866).intern(), is("���� �뫠 ࠬ�1!"));
+        assertThat(new String(strCP866, CP_866).intern(), is(str));
+        assertThat(new String(strCP1251).intern(), is("���� ���� ����1!"));
+    }
 }
