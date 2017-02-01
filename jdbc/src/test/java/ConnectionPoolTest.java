@@ -8,7 +8,7 @@ public class ConnectionPoolTest {
 
     @Test
     public void takeConnection() throws Exception {
-        assertNotNull(connectionPool.takeConnection());
+        assertNotNull(connectionPool.get());
     }
 
 }
