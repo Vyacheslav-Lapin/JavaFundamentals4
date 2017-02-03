@@ -1,8 +1,13 @@
+package cp;
+
 import lombok.SneakyThrows;
 import lombok.val;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -10,6 +15,7 @@ import java.util.Properties;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 public class ConnectionPool implements Supplier<Connection>, AutoCloseable {
     private BlockingQueue<Connection> connectionQueue;
@@ -17,11 +23,13 @@ public class ConnectionPool implements Supplier<Connection>, AutoCloseable {
     private static final String DB_DRIVER = "driver";
     private static final String DB_URL = "url";
     private static final String DB_POLL_SIZE = "poolSize";
+    private static final String DB_PROPERTIES_FILE_NAME = "db.properties";
 
     @SneakyThrows
     public ConnectionPool(String resourcesDbProperties) {
 
-        Properties properties = getProperties(resourcesDbProperties);
+        Properties properties = getProperties(
+                resourcesDbProperties + "/" + DB_PROPERTIES_FILE_NAME);
         String url = (String) properties.remove(DB_URL);
         int poolSize = Integer.parseInt((String) properties.remove(DB_POLL_SIZE));
         initDriverClass(properties);
@@ -35,7 +43,16 @@ public class ConnectionPool implements Supplier<Connection>, AutoCloseable {
                 connectionQueue.add(PooledConnection.from(connection, connectionQueue::add));
             }
         } catch (SQLException e) {
-            throw new ConnectionPoolException("SQLException in ConnectionPool", e);
+            throw new ConnectionPoolException("SQLException in cp.ConnectionPool", e);
+        }
+
+        for (int i = 1; new File(resourcesDbProperties + "/" + i + ".sql").exists(); i++) {
+            String collect = Files.readAllLines(Paths.get(resourcesDbProperties + "/" + i + ".sql")).stream()
+                    .collect(Collectors.joining());
+            try (val conn = get();
+                 val stmt = conn.createStatement()) {
+                stmt.executeUpdate(collect);
+            }
         }
     }
 

@@ -1,3 +1,5 @@
+package cp;
+
 import lombok.SneakyThrows;
 
 import java.sql.*;
@@ -17,7 +19,7 @@ public interface PooledConnection extends Connection {
         return new PooledConnection() {
             @Override
             public Connection getRealConnection() {
-                return null;
+                return c;
             }
 
             @Override
