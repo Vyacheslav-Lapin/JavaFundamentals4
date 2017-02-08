@@ -1,4 +1,4 @@
-package xml.sax;
+package xml;
 
 import lombok.Builder;
 import lombok.Value;

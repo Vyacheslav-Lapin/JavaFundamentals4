@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
+import xml.Food;
 
 import java.util.List;
 
@@ -27,6 +28,5 @@ public class MenuSaxHandlerTest {
                                 .description("two of our famous Belgian Waffles with plenty of real maple syrup")
                                 .calories(650)
                                 .build()));
-
     }
 }

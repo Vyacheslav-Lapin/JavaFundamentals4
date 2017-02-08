@@ -7,6 +7,8 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.helpers.DefaultHandler;
+import xml.Food;
+import xml.MenuTagName;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,10 +19,6 @@ import static java.lang.Integer.parseInt;
 @EqualsAndHashCode(callSuper = true)
 @ToString
 public class MenuSaxHandler extends DefaultHandler {
-
-    private static enum MenuTagName {
-        NAME, PRICE, DESCRIPTION, CALORIES, FOOD, BREAKFAST_MENU
-    }
 
     private List<Food> foodList = new ArrayList<>();
 
