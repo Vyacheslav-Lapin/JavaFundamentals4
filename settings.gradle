@@ -6,4 +6,5 @@ include 'intro',
         'io',
         'collections',
         'threads',
-        'jdbc'
+        'jdbc',
+        'xml'
