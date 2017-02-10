@@ -37,22 +37,22 @@ public class DomReader {
         val menu = new ArrayList<Food>();
 
         NodeList foodNodes = root.getElementsByTagName("food");
-        Food.FoodBuilder food;
+        Food food;
 
         for (int i = 0; i < foodNodes.getLength(); i++) {
-            food = Food.builder();
             Element foodElement = (Element) foodNodes.item(i);
-            food.id(Integer.parseInt(foodElement.getAttribute("id")));
-            food.name(getSingleChild(foodElement, "name").getTextContent().trim());
-            food.description(getSingleChild(foodElement, "description").getTextContent().trim());
-            food.price(getSingleChild(foodElement, "price").getTextContent().trim());
-            food.calories(Integer.parseInt(getSingleChild(foodElement, "calories").getTextContent().trim()));
-            menu.add(food.build());
+            menu.add(
+                    new Food()
+                            .id(Integer.parseInt(foodElement.getAttribute("id")))
+                            .name(getSingleChild(foodElement, "name").getTextContent().trim())
+                            .description(getSingleChild(foodElement, "description").getTextContent().trim())
+                            .price(getSingleChild(foodElement, "price").getTextContent().trim())
+                            .calories(Integer.parseInt(getSingleChild(foodElement, "calories").getTextContent().trim())));
         }
         return menu;
     }
 
-    private static Element getSingleChild(Element element, String childName){
+    private static Element getSingleChild(Element element, String childName) {
         NodeList nlist = element.getElementsByTagName(childName);
         return (Element) nlist.item(0);
     }

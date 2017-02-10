@@ -22,7 +22,7 @@ public class MenuSaxHandler extends DefaultHandler {
 
     private List<Food> foodList = new ArrayList<>();
 
-    private Food.FoodBuilder food;
+    private Food food;
     private StringBuilder text;
 
     public List<Food> getFoodList() {
@@ -37,7 +37,7 @@ public class MenuSaxHandler extends DefaultHandler {
         text = new StringBuilder();
 
         if (qName.equals("food"))
-            food = Food.builder()
+            food = new Food()
                     .id((parseInt(attributes.getValue("id"))));
     }
 
@@ -66,7 +66,7 @@ public class MenuSaxHandler extends DefaultHandler {
                 food.calories(parseInt(text.toString()));
                 break;
             case FOOD:
-                foodList.add(food.build());
+                foodList.add(food);
                 food = null;
         }
     }

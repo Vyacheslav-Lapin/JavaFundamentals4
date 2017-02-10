@@ -16,7 +16,7 @@ import static javax.xml.stream.XMLStreamConstants.*;
 public class StAXMenuParser {
     static List<Food> process(XMLStreamReader reader) throws XMLStreamException {
         val menu = new ArrayList<Food>();
-        Food.FoodBuilder food = null;
+        Food food = null;
         MenuTagName elementName = null;
         while (reader.hasNext()) {
             // определение типа "прочтённого" элемента (тега)
@@ -25,7 +25,7 @@ public class StAXMenuParser {
                 case START_ELEMENT:
                     elementName = MenuTagName.getElementTagName(reader.getLocalName());
                     if (elementName == MenuTagName.FOOD)
-                        food = Food.builder()
+                        food = new Food()
                                 .id(parseInt(reader.getAttributeValue(null, "id")));
                     break;
 
@@ -57,7 +57,7 @@ public class StAXMenuParser {
                     elementName = MenuTagName.getElementTagName(reader.getLocalName());
                     if (elementName == MenuTagName.FOOD)
                         //noinspection ConstantConditions
-                        menu.add(food.build());
+                        menu.add(food);
             }
         }
         return menu;

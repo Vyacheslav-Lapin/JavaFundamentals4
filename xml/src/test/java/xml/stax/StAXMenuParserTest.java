@@ -25,13 +25,12 @@ public class StAXMenuParserTest {
             List<Food> foodList = StAXMenuParser.process(reader);
             assertTrue(foodList != null &&
                     foodList.contains(
-                            Food.builder()
+                            new Food()
                                     .id(1)
                                     .name("Belgian Waffles")
                                     .price("$5.95")
                                     .description("two of our famous Belgian Waffles with plenty of real maple syrup")
-                                    .calories(650)
-                                    .build()));
+                                    .calories(650)));
 
         } catch (XMLStreamException e) {
             e.printStackTrace();

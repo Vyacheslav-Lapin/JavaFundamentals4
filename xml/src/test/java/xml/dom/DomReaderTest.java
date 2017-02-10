@@ -14,13 +14,12 @@ public class DomReaderTest {
         List<Food> foods = DomReader.getFoods(new File("src/test/resources/menu.xml"));
         assertTrue(foods
                 .contains(
-                        Food.builder()
+                        new Food()
                                 .id(1)
                                 .name("Belgian Waffles")
                                 .price("$5.95")
                                 .description("two of our famous Belgian Waffles with plenty of real maple syrup")
-                                .calories(650)
-                                .build()));
+                                .calories(650)));
     }
 
 }
