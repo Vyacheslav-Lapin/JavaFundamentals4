@@ -9,6 +9,7 @@ import xml.Food;
 import java.util.List;
 
 import static org.junit.Assert.assertTrue;
+import static xml.Tests.RESOURCES_FILE_PATH;
 
 public class MenuSaxHandlerTest {
     @Test
@@ -16,7 +17,7 @@ public class MenuSaxHandlerTest {
         XMLReader reader = XMLReaderFactory.createXMLReader();
         MenuSaxHandler handler = new MenuSaxHandler();
         reader.setContentHandler(handler);
-        reader.parse(new InputSource("src/test/resources/menu.xml"));
+        reader.parse(new InputSource(RESOURCES_FILE_PATH + "menu.xml"));
 
         List<Food> foodList = handler.getFoodList();
         assertTrue(foodList

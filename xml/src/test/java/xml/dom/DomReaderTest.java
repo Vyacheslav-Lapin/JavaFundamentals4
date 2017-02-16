@@ -5,13 +5,16 @@ import xml.Food;
 
 import java.io.File;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertTrue;
+import static xml.Tests.RESOURCES_FILE_PATH;
 
 public class DomReaderTest {
     @Test
     public void getFoods() throws Exception {
-        List<Food> foods = DomReader.getFoods(new File("src/test/resources/menu.xml"));
+        List<Food> foods = DomReader.getFoods(new File(RESOURCES_FILE_PATH + "menu.xml"))
+                .collect(Collectors.toList());
         assertTrue(foods
                 .contains(
                         new Food()

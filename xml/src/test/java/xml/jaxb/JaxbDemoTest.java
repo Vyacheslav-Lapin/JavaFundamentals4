@@ -7,12 +7,13 @@ import xml.Food;
 import java.io.File;
 
 import static org.junit.Assert.assertEquals;
+import static xml.Tests.RESOURCES_FILE_PATH;
 
 public class JaxbDemoTest {
 
     private Food food;
     private JaxbDemo<Food> foodJaxbDemo;
-    private File file = new File("src/test/resources/food.xml");
+    private File file = new File(RESOURCES_FILE_PATH + "food.xml");
 
     @Before
     public void setUp() throws Exception {

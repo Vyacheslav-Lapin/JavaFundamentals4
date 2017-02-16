@@ -10,9 +10,8 @@ import java.io.IOException;
 
 public class StAXFileWriter {
     static void writeToFile(File file) throws IOException, XMLStreamException {
-        val factory = XMLOutputFactory.newInstance();
         val stream = new FileWriter(file);
-        val writer = factory.createXMLStreamWriter(stream);
+        val writer = XMLOutputFactory.newInstance().createXMLStreamWriter(stream);
         try {
             writer.writeStartDocument();
             writer.writeStartElement("document");

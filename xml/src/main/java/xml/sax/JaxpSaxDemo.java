@@ -1,4 +1,4 @@
-package xml.jaxp;
+package xml.sax;
 
 import lombok.SneakyThrows;
 import org.xml.sax.helpers.DefaultHandler;

@@ -11,13 +11,14 @@ import java.io.InputStream;
 import java.util.List;
 
 import static org.junit.Assert.assertTrue;
+import static xml.Tests.RESOURCES_FILE_PATH;
 
 public class StAXMenuParserTest {
     @Test
     public void process() throws Exception {
         XMLInputFactory inputFactory = XMLInputFactory.newInstance();
         try {
-            InputStream input = new FileInputStream("src/test/resources/menu.xml");
+            InputStream input = new FileInputStream(RESOURCES_FILE_PATH + "menu.xml");
 
             XMLStreamReader reader =
                     inputFactory.createXMLStreamReader(input);

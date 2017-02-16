@@ -2,14 +2,15 @@ package xml.ws.client;
 
 import com.epam.courses.jf.functions.ExceptionalBiFunction;
 import com.epam.courses.jf.functions.ExceptionalFunction;
-import com.epam.courses.jf.functions.VarFunction;
 
 import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
 import javax.xml.ws.WebEndpoint;
 import javax.xml.ws.WebServiceClient;
 import javax.xml.ws.WebServiceFeature;
+import java.lang.reflect.Method;
 import java.net.URL;
+import java.util.Optional;
 
 @WebServiceClient(
         name = "HelloService",
@@ -19,55 +20,51 @@ public class HelloService extends Service {
 
     private static final String WEB_SERVICE_NAME;
     private static final String TARGET_NAMESPACE;
-    private static final String WSDL_LOCATION;
+    private static final URL WSDL_LOCATION;
+    private static final QName PORT_NAME;
 
     static {
         WebServiceClient webServiceClient = HelloService.class.getDeclaredAnnotation(WebServiceClient.class);
+
         WEB_SERVICE_NAME = webServiceClient.name();
         TARGET_NAMESPACE = webServiceClient.targetNamespace();
-        WSDL_LOCATION = webServiceClient.wsdlLocation();
+        WSDL_LOCATION = ExceptionalFunction.getOrThrowUnchecked(URL::new, webServiceClient.wsdlLocation());
+
+        Method getHelloPort = ExceptionalBiFunction.getOrThrowUnchecked(
+                HelloService.class::getDeclaredMethod,
+                "getHelloPort",
+                WebServiceFeature[].class);
+        PORT_NAME = new QName(TARGET_NAMESPACE, getHelloPort.getDeclaredAnnotation(WebEndpoint.class).name());
     }
-
-    private static final String HELLO_PORT = ExceptionalBiFunction.getOrThrowUnchecked(
-            HelloService.class::getDeclaredMethod,
-            "getHelloPort",
-            WebServiceFeature[].class
-    ).getDeclaredAnnotation(WebEndpoint.class).name();
-
-    private final static URL HELLOSERVICE_WSDL_LOCATION =
-            ExceptionalFunction.getOrThrowUnchecked(URL::new, WSDL_LOCATION);
-
-    private final static QName HELLOSERVICE_QNAME = new QName(TARGET_NAMESPACE, WEB_SERVICE_NAME);
 
     @SuppressWarnings("WeakerAccess")
     private HelloService() {
-        super(HELLOSERVICE_WSDL_LOCATION, HELLOSERVICE_QNAME);
+        super(WSDL_LOCATION, new QName(TARGET_NAMESPACE, WEB_SERVICE_NAME));
     }
 
-    /**
-     * @param features A list of {@link javax.xml.ws.WebServiceFeature} to configure on the proxy.  Supported features not in the <code>features</code> parameter will have their default values.
-     * @return returns Hello
-     */
     @SuppressWarnings("WeakerAccess")
     @WebEndpoint(name = "HelloPort")
     public Hello getHelloPort(WebServiceFeature... features) {
-        return getPort(new QName(TARGET_NAMESPACE, HELLO_PORT), Hello.class, features);
+        return getPort(PORT_NAME, Hello.class, features);
     }
 
     private static volatile HelloService INSTANCE;
 
-    public static HelloService getInstance() {
-        HelloService instance = INSTANCE;
-        if (instance == null)
-            synchronized (HelloService.class) {
-                instance = INSTANCE;
-                if (instance == null)
-                    INSTANCE = instance = new HelloService();
-            }
-        return instance;
+    private static HelloService getInstance() {
+        return Optional.ofNullable(INSTANCE)
+                .orElseGet(() -> {
+                    synchronized (HelloService.class) {
+                        return Optional.ofNullable(INSTANCE)
+                                .orElse(INSTANCE = new HelloService());
+                    }
+                });
     }
 
-    public static VarFunction<WebServiceFeature, Hello> get() {
-        return getInstance()::getHelloPort;
+    /**
+     * @param webServiceFeatures A list of {@link javax.xml.ws.WebServiceFeature} to configure on the proxy. Supported
+     *                           features not in the <code>features</code> parameter will have their default values.
+     */
+    public static Hello get(WebServiceFeature... webServiceFeatures) {
+        return getInstance().getHelloPort(webServiceFeatures);
     }
 }
