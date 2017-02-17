@@ -1,20 +1,21 @@
 package xml.dom;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import xml.Food;
 
 import java.io.File;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import static org.junit.Assert.assertTrue;
-import static xml.Tests.RESOURCES_FILE_PATH;
+import static com.epam.courses.jf.test.Tests.RESOURCES_FILE_PATH;
+import static java.util.stream.Collectors.toList;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class DomReaderTest {
+class DomReaderTest {
     @Test
-    public void getFoods() throws Exception {
+    void getFoods() throws Exception {
         List<Food> foods = DomReader.getFoods(new File(RESOURCES_FILE_PATH + "menu.xml"))
-                .collect(Collectors.toList());
+                .collect(toList());
+
         assertTrue(foods
                 .contains(
                         new Food()

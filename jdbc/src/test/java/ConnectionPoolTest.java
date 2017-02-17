@@ -2,27 +2,28 @@ import cp.ConnectionPool;
 import lombok.val;
 import model.Gender;
 import model.Person;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static com.epam.courses.jf.test.Tests.RESOURCES_FILE_PATH;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class ConnectionPoolTest {
+class ConnectionPoolTest {
 
-    ConnectionPool connectionPool = new ConnectionPool("src/test/resources/sql");
+    private ConnectionPool connectionPool = new ConnectionPool(RESOURCES_FILE_PATH + "sql");
 
     @Test
-    public void takeConnection() throws Exception {
+    void takeConnection() throws Exception {
         assertNotNull(connectionPool.get());
     }
 
     @Test
-    public void takePerson() throws Exception {
+    void takePerson() throws Exception {
         try (val connection = connectionPool.get()) {
             val stmt = connection.createStatement();
             val rs = stmt.executeQuery(
-                    "SELECT id, gender_code, full_name" +
-                     " FROM Person");
+                    "SELECT id, gender_code, full_name " +
+                            "FROM Person");
 
             assertTrue(rs.next());
 
@@ -34,7 +35,4 @@ public class ConnectionPoolTest {
             System.out.println(person);
         }
     }
-
-
-
 }

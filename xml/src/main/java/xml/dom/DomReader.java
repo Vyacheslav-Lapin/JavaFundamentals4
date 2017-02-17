@@ -1,7 +1,7 @@
 package xml.dom;
 
-import com.epam.courses.jf.functions.ExceptionalFunction;
-import com.epam.courses.jf.functions.ExceptionalSupplier;
+import com.hegel.core.functions.ExceptionalFunction;
+import com.hegel.core.functions.ExceptionalSupplier;
 import lombok.SneakyThrows;
 import lombok.val;
 import org.w3c.dom.Document;
@@ -48,10 +48,10 @@ public class DomReader {
                         .calories(Integer.parseInt(getSingleChild(foodElement, "calories").getTextContent().trim())));
     }
 
-    private static Stream<Element> getElements(final NodeList nodeList) {
+    private static Stream<Element> getElements(NodeList nodeList) {
 
         val length = nodeList.getLength();
-        val itetator = new Iterator<Element>() {
+        val iterator = new Iterator<Element>() {
             private int i = 0;
             @Override
             public boolean hasNext() {
@@ -63,11 +63,11 @@ public class DomReader {
             }
         };
 
-        return StreamSupport.stream(Spliterators.spliterator(itetator, length, Spliterator.ORDERED), false);
+        return StreamSupport.stream(Spliterators.spliterator(iterator, length, Spliterator.ORDERED), false);
     }
 
     private static Element getSingleChild(Element element, String childName) {
-        NodeList nlist = element.getElementsByTagName(childName);
-        return (Element) nlist.item(0);
+        NodeList nodeList = element.getElementsByTagName(childName);
+        return (Element) nodeList.item(0);
     }
 }

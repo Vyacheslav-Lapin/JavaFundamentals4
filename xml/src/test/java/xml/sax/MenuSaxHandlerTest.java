@@ -1,6 +1,6 @@
 package xml.sax;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
@@ -8,12 +8,12 @@ import xml.Food;
 
 import java.util.List;
 
-import static org.junit.Assert.assertTrue;
-import static xml.Tests.RESOURCES_FILE_PATH;
+import static com.epam.courses.jf.test.Tests.RESOURCES_FILE_PATH;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class MenuSaxHandlerTest {
+class MenuSaxHandlerTest {
     @Test
-    public void getFoodList() throws Exception {
+    void getFoodList() throws Exception {
         XMLReader reader = XMLReaderFactory.createXMLReader();
         MenuSaxHandler handler = new MenuSaxHandler();
         reader.setContentHandler(handler);

@@ -11,13 +11,17 @@ subprojects {
 
     repositories {
         mavenCentral()
+        maven { url 'https://jitpack.io' }
     }
 
     // this turns logging on in tests:
     test.testLogging.showStandardStreams = true
 
     dependencies {
+        compile 'com.github.Vyacheslav-Lapin:Hegel:master-SNAPSHOT' //https://github.com/Vyacheslav-Lapin/Hegel.git
         compileOnly 'org.projectlombok:lombok:+'
-        testCompile 'junit:junit:+', 'org.projectlombok:lombok:+'
+        testCompile 'org.junit.jupiter:junit-jupiter-api:+',
+                'org.hamcrest:java-hamcrest:+',
+                'org.projectlombok:lombok:+'
     }
 }

@@ -1,35 +1,32 @@
 package xml.ws.client;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import javax.xml.ws.Endpoint;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
 
-public class HelloServiceTest {
+class HelloServiceTest {
 
     private static final String URL = "http://localhost:1212/hello";
+    private Endpoint endpoint;
 
-    private Thread thread;
-
-    @Before
-    public void setUp() throws Exception {
-        System.out.printf("Service started @ %s?wsdl", URL);
-        thread = new Thread(() -> Endpoint.publish(URL, new xml.ws.Hello()));
-        thread.start();
-        Thread.sleep(1_500);
+    @BeforeEach
+    void setUp() throws Exception {
+//        System.out.printf("Service started @ %s?wsdl", URL);
+        endpoint = Endpoint.publish(URL, new xml.ws.Hello());
     }
 
     @Test
-    public void get() throws Exception {
+    void get() throws Exception {
         assertThat(HelloService.get().sayHello("Henry"), is("Hello, Henry"));
     }
 
-    @After
-    public void tearDown() throws Exception {
-        thread.interrupt();
+    @AfterEach
+    void tearDown() throws Exception {
+        endpoint.stop();
     }
 }

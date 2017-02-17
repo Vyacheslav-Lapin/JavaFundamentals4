@@ -1,12 +1,12 @@
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
 
-public class HelloWorldTest {
+class HelloWorldTest {
 
     @Test
-    public void постфиксныйИнкрементРаботаетПравильно() throws Exception {
+    void постфиксныйИнкрементРаботаетПравильно() throws Exception {
 
         int i=3;
         int k = 1;

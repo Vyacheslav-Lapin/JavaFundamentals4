@@ -1,19 +1,20 @@
 package xml.stax;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 
-import static xml.Tests.RESOURCES_FILE_PATH;
+import static com.epam.courses.jf.test.Tests.RESOURCES_FILE_PATH;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class StAXFileWriterTest {
+class StAXFileWriterTest {
     @Test
-    public void writeToFile() throws Exception {
+    void writeToFile() throws Exception {
         File file = new File(RESOURCES_FILE_PATH + "output2.xml");
         StAXFileWriter.writeToFile(file);
-        Assert.assertTrue(file.exists());
-        Assert.assertEquals(76, file.length());
+        assertTrue(file.exists());
+        assertEquals(76, file.length());
     }
 
 }

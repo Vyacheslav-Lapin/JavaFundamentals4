@@ -1,22 +1,22 @@
 package xml.jaxb;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import xml.Food;
 
 import java.io.File;
 
-import static org.junit.Assert.assertEquals;
-import static xml.Tests.RESOURCES_FILE_PATH;
+import static com.epam.courses.jf.test.Tests.RESOURCES_FILE_PATH;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class JaxbDemoTest {
+class JaxbDemoTest {
 
     private Food food;
     private JaxbDemo<Food> foodJaxbDemo;
     private File file = new File(RESOURCES_FILE_PATH + "food.xml");
 
-    @Before
-    public void setUp() throws Exception {
+    @BeforeEach
+    void setUp() throws Exception {
         food = new Food()
                 .id(123)
                 .name("nnn")
@@ -27,7 +27,7 @@ public class JaxbDemoTest {
     }
 
     @Test
-    public void marshal() throws Exception {
+    void marshal() throws Exception {
         foodJaxbDemo.marshal(food, file);
         assertEquals(food, foodJaxbDemo.unmarshal(file));
     }
