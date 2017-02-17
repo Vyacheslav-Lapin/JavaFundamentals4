@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<web-app version="3.1"
+         xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+                 http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+
+    <servlet>
+        <servlet-name>PageMain</servlet-name>
+        <jsp-file>/WEB-INF/jsp/main.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>PageMain</servlet-name>
+        <url-pattern>/main</url-pattern>
+    </servlet-mapping>
+
+</web-app>

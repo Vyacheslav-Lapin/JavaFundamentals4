@@ -6,6 +6,8 @@
 <body>
     <h1>Hello, World!</h1>
 
-    Go to <a href="main.jsp">main</a>
+    Go to <a href="WEB-INF/jsp/main.jsp">main</a><br/>
+
+    Go to <a href="${pageContext.request.contextPath}/main">main</a>
 </body>
 </html>
