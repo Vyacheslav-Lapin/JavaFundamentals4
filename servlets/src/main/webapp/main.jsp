@@ -1,11 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Main</title>
 </head>
 <body>
-    <h1>Hello, World!</h1>
-
-    Go to <a href="main.jsp">main</a>
+    Go to <a href="index.jsp">index</a>
 </body>
 </html>
