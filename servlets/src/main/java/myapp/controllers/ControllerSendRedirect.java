@@ -1,4 +1,4 @@
-package myapp;
+package myapp.controllers;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,6 +9,7 @@ import java.io.IOException;
 
 @WebServlet("/ControllerSendRedirect")
 public class ControllerSendRedirect extends HttpServlet {
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.sendRedirect("/main");
     }

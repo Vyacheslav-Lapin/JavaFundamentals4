@@ -5,26 +5,40 @@
 </head>
 <body>
     <h1>Hello, World!</h1>
-<%--suppress JspAbsolutePathInspection --%>
+
+    <%--suppress JspAbsolutePathInspection --%>
     Go to <a href="/main/">main</a>
 
-<%--suppress CheckEmptyScriptTag --%>
+    <%--suppress CheckEmptyScriptTag --%>
     <p/>
 
+    <%--suppress JspAbsolutePathInspection --%>
     <form action="/ControllerForward" method="post">
         <input type="submit" value="forward()"/><br/>
     </form>
 
-    <br/>
+    <p/>
 
+    <%--suppress JspAbsolutePathInspection --%>
     <form action="/ControllerSendRedirect" method="post">
         <input type="submit" value="sendRedirect()"/><br/>
     </form>
 
+    <%--suppress JspAbsolutePathInspection --%>
     <form action="/SessionController" method="post">
-        <input name="paramname" value="" placeholder="paramvalue"/> <br/>
-        <input name="paramvalue" value="" placeholder="paramvalue"/> <br/>
-        <input type="submit" value="send next HttpRequest"/><br />
+        <input name="paramName" placeholder="paramName"/><br/>
+        <input name="paramValue" placeholder="paramValue"/><br/>
+        <input type="submit" value="send next HttpRequest"/><br/>
+    </form>
+
+    <%--suppress JspAbsolutePathInspection --%>
+    <form action="/ServletForJspElement" method="post">
+        <input type="hidden" name="command" value="naming" />
+        Введите имя:<br/>
+        <input name="name" placeholder="name"/>
+        <br /> Введите фамилию:<br />
+        <input name="surname" placeholder="surname" /><br />
+        <input type="submit" value="Отправить" /><br />
     </form>
 </body>
 </html>

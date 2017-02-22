@@ -1,4 +1,4 @@
-package myapp;
+package myapp.controllers;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -7,18 +7,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/Controller2")
-public class Controller extends HttpServlet {
+@WebServlet("/ServletForJspElement")
+public class ServletForJspElement extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        processRequest();
+        request.setCharacterEncoding("utf-8");
+        response.setContentType("text/html");
+        if ("naming".equals(request.getParameter("command")))
+            request.getRequestDispatcher("jspusebean/index.jsp")
+                    .forward(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        processRequest();
-    }
-
-    private void processRequest() {
-        System.out.println("I am here!!!");
+        doPost(request, response);
     }
 }

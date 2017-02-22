@@ -1,4 +1,4 @@
-package myapp;
+package myapp.controllers;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,32 +8,28 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.Collections;
 
 @WebServlet("/SessionController")
 public class SessionController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         response.setContentType("text/html");
+
         HttpSession session = request.getSession();
 
-        String name = request.getParameter("paramname");
-        String value = request.getParameter("paramvalue");
-
-        session.setAttribute(name, value);
+        session.setAttribute(
+                request.getParameter("paramName"),
+                request.getParameter("paramValue"));
 
         try (PrintWriter out = response.getWriter()) {
+            out.printf("%s<br/>", session.getId());
+            Collections.list(session.getAttributeNames())
+                    .forEach(paramName -> out.printf(
+                            "%s - %s<br/>", paramName, session.getAttribute(paramName)));
 
-            out.println(session.getId() + "<br/>");
-
-            ArrayList<String> list = Collections.list(session.getAttributeNames());
-            for(String paramValue: list) {
-                value = (String) session.getAttribute(paramValue);
-                out.println(paramValue + " - " + value + "<br/>");
-            }
-
-            request.getRequestDispatcher("/index.jsp").
-                    include(request, response);
+            request.getRequestDispatcher("/index.jsp")
+                    .include(request, response);
         }
     }
 

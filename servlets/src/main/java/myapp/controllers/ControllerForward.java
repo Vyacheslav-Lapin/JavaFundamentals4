@@ -1,4 +1,4 @@
-package myapp;
+package myapp.controllers;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,7 +12,6 @@ public class ControllerForward extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         req.getRequestDispatcher("/main/index.jsp")
                 .forward(req, resp);
     }
